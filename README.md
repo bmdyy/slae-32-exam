@@ -3,7 +3,7 @@
 - PA-25640
 - 27.12.2021 - XX.XX.XXXX
 
-**Assignments:*
+**Assignments:**
 - [ ] A1 - Shell_Bind_TCP
 - [ ] A2 - Shell_Reverse_TCP
 - [ ] A3 - Egghunter
