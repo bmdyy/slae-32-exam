@@ -1,2 +1,3 @@
 .gdb_history
-A1/bind_shell_tcp
+A1/shell_bind_tcp
+A2/shell_reverse_tcp

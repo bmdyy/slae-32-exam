@@ -56,9 +56,9 @@ _start:
 	; }
 
 	xor ebx, ebx
-	push dword eax			; char sin_zero[8] 2/2 => 0x00000000
-	push dword eax			; char sin_zero[8] 1/2 => 0x00000000
-	push dword eax			; struct in_addr => INADDR_ANY = 0x00000000
+	push dword ebx			; char sin_zero[8] 2/2 => 0x00000000
+	push dword ebx			; char sin_zero[8] 1/2 => 0x00000000
+	push dword ebx			; struct in_addr => INADDR_ANY = 0x00000000
 	push word PLACEHOLDER		; unsigned short sin_port => inserted by wrapper.py
 	mov bl, 0x2
 	push word bx			; short sin_family => AF_INET = 0x2
