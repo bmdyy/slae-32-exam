@@ -5,7 +5,7 @@
 
 **Assignments:**
 - [x] A1 - Shell_Bind_TCP
-- [ ] A2 - Shell_Reverse_TCP
+- [x] A2 - Shell_Reverse_TCP
 - [ ] A3 - Egghunter
 - [ ] A4 - Custom Encoding Scheme
 - [ ] A5 - Shellcode Analysis
