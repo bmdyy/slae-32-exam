@@ -19,8 +19,11 @@ if ! ld -o $1 $1.o; then
 	exit
 fi
 
+echo "[*] Creating shellcode dump script..."
+echo -n aW1wb3J0IHN5cwp3aXRoIG9wZW4oc3lzLmFyZ3ZbMV0sICJyYiIpIGFzIGY6CglicyA9IGYucmVhZCgpCQoJaSA9IDB4MTAwMAoJYjEgPSAweGZmCgliMiA9IDB4ZmYKCXNoZWxsY29kZSA9ICIiCgl3aGlsZSBUcnVlOgoJCXNoZWxsY29kZSArPSAiXFx4JS4yeCIgJSBic1tpXQoJCWkgKz0gMQoJCWIxID0gYjIKCQliMiA9IGJzW2ldCgkJaWYgYjEgPT0gYjIgPT0gMHgwMDoKCQkJYnJlYWsKCXByaW50KCciJytzaGVsbGNvZGVbOi00XSsnIicpCg== | base64 -d > dumpShellcode.py
+
 echo "[*] Dumping shellcode..."
-shellcode=$(objdump -d $1|grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g')
+shellcode=$(python3 dumpShellcode.py $1)
 
 echo "[*] Writing shellcode runner source file (./shellcode_autogen.c)..."
 body=$(cat << EOT > shellcode_autogen.c
@@ -46,5 +49,11 @@ if ! gcc -o shellcode shellcode_autogen.c; then
 	echo "    -- ERROR"
 	exit
 fi
+
+echo "[*] Removing temporary files..."
+rm "$1.o"
+rm "shellcode_autogen.c"
+rm "dumpShellcode.py"
+rm "$1"
 
 echo "[+] All done! Shellcode runner at ./shellcode"
