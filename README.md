@@ -4,10 +4,10 @@
 - 27.12.2021 - XX.XX.XXXX
 
 **Assignments:**
-- [x] A1 - Shell_Bind_TCP
-- [x] A2 - Shell_Reverse_TCP
+- [x] A1 - Shell_Bind_TCP - [Blog Post](https://williammoody.com/slae32/1)
+- [x] A2 - Shell_Reverse_TCP - [Blog Post](https://williammoody.com/slae32/2)
 - [ ] A3 - Egghunter
-- [ ] A4 - Custom Encoding Scheme
+- [x] A4 - Custom Encoding Scheme - [Blog Post](https://williammoody.com/slae32/4)
 - [ ] A5 - Shellcode Analysis
 - [ ] A6 - Polymorphic Shellcodes
 - [ ] A7 - Custom Cryptor
