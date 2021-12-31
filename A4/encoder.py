@@ -68,7 +68,13 @@ if __name__ == "__main__":
 	dec_shellcode = decode_shellcode(enc_shellcode)
 	#print("Dec. =", dec_shellcode)
 	
-	print('Len. = 0x%.2x (%d)' % (len(shellcode), len(shellcode)))
+	print("LENGTH:")
+	print('cmp ecx, 0x%.2x' % len(shellcode))
 	print()
-	print('key: db 0x%.2x' % key)
+
+	print("KEY:")
+	print('xor al, 0x%.2x' % key)
+	print()
+
+	print("SHELLCODE:")
 	print('shellcode: db "' + enc_shellcode + '"')
