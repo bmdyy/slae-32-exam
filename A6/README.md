@@ -6,4 +6,5 @@
 2. mkdir("hacked", 0755) + exit(0), #542, 36 bytes: [shell-storm.org](http://shell-storm.org/shellcode/files/shellcode-542.php)
 	- Polymorphic: 29 bytes
 
-3. 
+3. Add a passwordless account to /etc/passwd, #543, 177 bytes: [shell-storm.org](http://shell-storm.org/shellcode/files/shellcode-543.php)
+	- Polymorphic: 139 bytes

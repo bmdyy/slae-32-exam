@@ -55,6 +55,6 @@ echo "[*] Removing temporary files..."
 rm "$1.o"
 rm "shellcode_autogen.c"
 rm "dumpShellcode.py"
-#rm "$1"
+rm "$1"
 
 echo "[+] All done! Shellcode runner at ./shellcode"
