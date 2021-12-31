@@ -1,3 +1,9 @@
+; A6 - Polymorphic Shellcode
+; William Moody
+; 31.12.2021
+; PA-25640
+; Original: http://shell-storm.org/shellcode/files/shellcode-811.php
+
 global _start
 section .text
 _start:
