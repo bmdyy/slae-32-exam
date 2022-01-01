@@ -9,5 +9,5 @@
 - [ ] A3 - Egghunter
 - [x] A4 - Custom Encoding Scheme - [Blog Post](https://williammoody.com/slae32/4)
 - [ ] A5 - Shellcode Analysis
-- [x] A6 - Polymorphic Shellcodes
+- [x] A6 - Polymorphic Shellcodes - [Blog Post](https://williammoody.com/slae32/6)
 - [ ] A7 - Custom Cryptor
