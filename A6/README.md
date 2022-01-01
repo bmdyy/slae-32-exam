@@ -8,3 +8,5 @@
 
 3. Add a passwordless account to /etc/passwd, #543, 177 bytes: [shell-storm.org](http://shell-storm.org/shellcode/files/shellcode-543.php)
 	- Polymorphic: 139 bytes
+
+To test, run `./compile.sh 811_mod` or whichever shellcode you want and then `./shellcode`
