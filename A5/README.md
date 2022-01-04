@@ -4,3 +4,5 @@
 3. linux/x86
 
 Check out each .md file for relevant analysis
+
+Compile `shellcode.c` with `gcc shellcode.c -o shellcode`
