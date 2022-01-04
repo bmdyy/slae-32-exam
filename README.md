@@ -10,4 +10,4 @@
 - [x] A4 - Custom Encoding Scheme - [Blog Post](https://williammoody.com/slae32/4)
 - [x] A5 - Shellcode Analysis - [Blog Post](https://williammoody.com/slae32/5)
 - [x] A6 - Polymorphic Shellcodes - [Blog Post](https://williammoody.com/slae32/6)
-- [ ] A7 - Custom Cryptor
+- [x] A7 - Custom Cryptor - [Blog Post](https://williammoody.com/slae32/7)
