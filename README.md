@@ -1,7 +1,7 @@
 # SLAE32 Exam
 - William Mark Moody
 - PA-25640
-- 27.12.2021 - 04.01.2021
+- 27.12.2021 - 04.01.2022
 
 **Assignments:**
 - [x] A1 - Shell_Bind_TCP - [Blog Post](https://williammoody.com/slae32/1)
